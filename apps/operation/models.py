@@ -53,7 +53,7 @@ class UserCourse(models.Model):
         verbose_name_plural = verbose_name
 
 
-class UserFavotite(models.Model):
+class UserFavorite(models.Model):
     FAV_TYPE = (
         (1, '课程'),
         (2, '课程机构'),

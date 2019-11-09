@@ -16,7 +16,7 @@ class UserProfile(AbstractUser):
     gender = models.CharField('性别', max_length=10, choices=GENDER_CHOICES, default='female')
     address = models.CharField('地址', max_length=100, default='')
     mobile = models.CharField('手机号', max_length=11, null=True, blank=True)
-    image = models.ImageField(upload_to='image/%Y%m', default='image/default.png', max_length=100)
+    image = models.ImageField('图片', upload_to='image/%Y%m', default='image/default.png', max_length=100)
 
     class Meta:
         verbose_name = '用户信息'
@@ -34,8 +34,8 @@ class EmailVerifyRecord(models.Model):
 
     code = models.CharField('验证码', max_length=20)
     email = models.EmailField('邮箱', max_length=50)
-    send_type = models.CharField(choices=SEND_CHOICES, max_length=10)
-    send_time = models.DateTimeField(default=datetime.now)
+    send_type = models.CharField('发送类型', choices=SEND_CHOICES, max_length=10)
+    send_time = models.DateTimeField('发送时间', default=datetime.now)
 
     class Meta:
         verbose_name = '邮箱验证码'
