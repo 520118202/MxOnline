@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'xadmin',
     'crispy_forms',
+    'captcha',
     'users',
     'course',
     'organization',
@@ -135,8 +136,15 @@ STATICFILES_DIRS = (
 # 重载AUTH_USER_MODEL
 AUTH_USER_MODEL = 'users.UserProfile'
 
-
 # 用户名和邮箱都可以登录
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+# 邮箱设置
+EMAIL_HOST = "smtp.qq.com"  # SMTP服务器主机
+EMAIL_PORT = 25  # 端口
+EMAIL_HOST_USER = "520118202@qq.com"  # 邮箱地址
+EMAIL_HOST_PASSWORD = "dwjybikexxxxxxxx"  # 密码
+EMAIL_USE_TLS = True
+EMAIL_FROM = "520118202@qq.com"  # 邮箱地址
