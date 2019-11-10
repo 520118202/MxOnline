@@ -24,6 +24,10 @@ class CourseOrg(models.Model):
     city = models.ForeignKey(CityDict, verbose_name='所在城市', on_delete=models.CASCADE)
     add_time = models.DateTimeField(default=datetime.now)
 
+    class Meta:
+        verbose_name = '机构'
+        verbose_name_plural = verbose_name
+
 
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, verbose_name='所属机构', on_delete=models.CASCADE)

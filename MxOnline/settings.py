@@ -127,5 +127,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 设置静态文件目录
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 # 重载AUTH_USER_MODEL
 AUTH_USER_MODEL = 'users.UserProfile'
+
+
+# 用户名和邮箱都可以登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
