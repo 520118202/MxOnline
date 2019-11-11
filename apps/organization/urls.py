@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 
-from organization.views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView
+from organization.views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView, \
+    AddFavView
 
 # 要写上app的名字
 app_name = 'organization'
