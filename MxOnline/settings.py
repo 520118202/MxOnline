@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
     'users',
     'course',
     'organization',
@@ -71,6 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 添加图片处理器，为了在课程列表中前面加上MEDIA_URL
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -148,3 +151,7 @@ EMAIL_HOST_USER = "520118202@qq.com"  # 邮箱地址
 EMAIL_HOST_PASSWORD = "dwjybikexxxxxxxx"  # 密码
 EMAIL_USE_TLS = True
 EMAIL_FROM = "520118202@qq.com"  # 邮箱地址
+
+# 设置上传文件的路径
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 指定根目录

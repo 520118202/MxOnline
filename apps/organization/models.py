@@ -13,20 +13,34 @@ class CityDict(models.Model):
         verbose_name = '城市'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
+
 
 class CourseOrg(models.Model):
+    ORG_CHOICES = (
+        ('pxjg', u'培训机构'),
+        ('gx', u'高校'),
+        ('gr', u'个人')
+    )
     name = models.CharField('机构名称', max_length=50)
     desc = models.TextField('机构描述')
     click_nums = models.IntegerField('点击数', default=0)
     fav_nums = models.IntegerField('收藏数', default=0)
-    image = models.ImageField('封面图', upload_to='org/%Y%m', max_length=100)
+    students = models.IntegerField('学习人数', default=0)
+    course_nums = models.IntegerField('课程人数', default=0)
+    image = models.ImageField('封面图', upload_to='org/%Y/%m', max_length=100)
     address = models.CharField('机构地址', max_length=150)
     city = models.ForeignKey(CityDict, verbose_name='所在城市', on_delete=models.CASCADE)
+    category = models.CharField(max_length=20, choices=ORG_CHOICES, verbose_name=u'机构类别', default='pxjg')
     add_time = models.DateTimeField(default=datetime.now)
 
     class Meta:
         verbose_name = '机构'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 
 class Teacher(models.Model):
@@ -38,6 +52,7 @@ class Teacher(models.Model):
     points = models.CharField('教学特点', max_length=50)
     click_nums = models.IntegerField('点击数', default=0)
     fav_nums = models.IntegerField('收藏数', default=0)
+    image = models.ImageField(default='', upload_to='teacher/%Y/%m', verbose_name='头像', max_length=100)
     add_time = models.DateTimeField(default=datetime.now)
 
     class Meta:
