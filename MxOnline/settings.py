@@ -155,3 +155,6 @@ EMAIL_FROM = "520118202@qq.com"  # 邮箱地址
 # 设置上传文件的路径
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 指定根目录
+
+# 静态文件
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

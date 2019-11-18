@@ -33,6 +33,7 @@ class CourseOrg(models.Model):
     address = models.CharField('机构地址', max_length=150)
     city = models.ForeignKey(CityDict, verbose_name='所在城市', on_delete=models.CASCADE)
     category = models.CharField(max_length=20, choices=ORG_CHOICES, verbose_name=u'机构类别', default='pxjg')
+    tag = models.CharField('机构标签', max_length=10, default='全国知名')
     add_time = models.DateTimeField(default=datetime.now)
 
     class Meta:

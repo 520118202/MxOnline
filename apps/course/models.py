@@ -28,6 +28,7 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, verbose_name='讲师', null=True, blank=True, on_delete=models.CASCADE)
     youneed_know = models.CharField('课程须知', max_length=300, default='')
     teacher_tell = models.CharField('老师告诉你', max_length=300, default='')
+    is_banner = models.BooleanField('是否轮播', default=False)
     add_time = models.DateTimeField('添加时间', default=datetime.now)
 
     class Meta:

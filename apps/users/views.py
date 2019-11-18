@@ -6,11 +6,12 @@ from django.contrib.auth.hashers import make_password
 from django.core.paginator import PageNotAnInteger
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 # Create your views here.
 # 邮箱和用户名都可以登录
 # 基础ModelBackend类，因为它有authenticate方法
+from django.urls import reverse
 from django.views.generic.base import View
 from pure_pagination import Paginator
 
@@ -18,7 +19,7 @@ from course.models import Course
 from operation.models import UserCourse, UserFavorite, UserMessage
 from organization.models import CourseOrg, Teacher
 from users.forms import LoginForm, RegisterForm, ForgetPwdForm, ModifyPwdForm, UploadImageForm, UserInfoForm
-from users.models import UserProfile, EmailVerifyRecord
+from users.models import UserProfile, EmailVerifyRecord, Banner
 from utils.email_send import send_register_email
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -35,6 +36,24 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             return None
+
+
+class IndexView(View):
+    """首页"""
+
+    def get(self, request):
+        # 轮播图
+        all_banners = Banner.objects.all().order_by('index')
+        # 课程
+        courses = Course.objects.filter(is_banner=False)[:6]
+        # 轮播课程
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        # 课程机构
+        course_orgs = Course.objects.all()[:15]
+        return render(request, 'index.html', {'all_banner': all_banners,
+                                              'courses': courses,
+                                              'banner_courses': banner_courses,
+                                              'course_orgs': course_orgs})
 
 
 class LoginView(View):
@@ -57,7 +76,7 @@ class LoginView(View):
                 if user.is_active:
                     # 只有注册激活才能登录
                     login(request, user)
-                    return render(request, 'index.html')
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request, 'login.html', {'msg': '用户尚未激活', 'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端
@@ -324,3 +343,17 @@ class LogoutView(View):
         logout(request)
         from django.urls import reverse
         return HttpResponseRedirect(reverse('index'))
+
+
+def page_not_found(request):
+    # 全局404处理函数
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+def page_error(request):
+    # 全局500处理函数
+    response = render_to_response('500.html', {})
+    response.status_code = 500
+    return response
